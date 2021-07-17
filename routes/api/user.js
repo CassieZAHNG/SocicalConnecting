@@ -76,15 +76,16 @@ router.post(
         },
       };
 
-      // jwt.sign(
-      //   payload,
-      //   config.get('jwtSecret'),
-      //   { expiresIn: '5 days' },
-      //   (err, token) => {
-      //     if (err) throw err;
-      //     res.json({ token });
-      //   }
-      // );
+      jwt.sign(
+        payload,
+        config.get('jwtToken'),
+        { expiresIn: 360000 },
+        //inside the call back get the token
+        (err, token) => {
+          if (err) throw err;
+          res.json({ token, id });
+        }
+      );
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');
